@@ -180,7 +180,18 @@
 * **Engine:** Unity 6 (`6000.6.4f1`) with Universal Render Pipeline (URP).
 * **Cinemachine:** Dynamic 3D combat camera snapping, idle breathing, and fixed apartment inspection framing.
 * **Dialogue & Narrative Engine:** **Ink by Inkle** (`com.inkle.ink-unity-integration`). Manages visual novel text trees, encrypted SMS threads, choice branch states, and binds directly to C# external functions for attribute-modified dice resolution.
+* **Story Compilation & Linting CLI:** **Inklecate CLI** (`v1.2.1`). Enables automated out-of-engine validation, syntax linting, and rapid batch compilation of `.ink` scripts into `.json` without triggering Unity domain reloads.
 * **Combat System Engine:** **Ability & Combat Toolkit (ACT)**. Powers the turn-based Conditional Time Battle (CTB) logic, status effects, cooldowns, and ability execution.
+* **Save & Persistence Architecture (Atomic JSON):**
+  * **Format:** Strongly-typed, human-readable **JSON** (via Unity `JsonUtility` / `Newtonsoft.Json`). Avoids bloated black-box relational databases (SQLite) and platform-specific native binaries.
+  * **Atomic File Writes:** State writes to an ephemeral `save_slot_XX.json.tmp` buffer before atomically replacing the active save file, preventing corruption during abrupt shutdowns or hard Game Overs.
+  * **Ink State Integration:** Directly serializes Ink's active dialogue flow and variable table using `story.state.ToJson()`.
+  * **Serialized Domains:**
+    * *Player State:* Four core pillars (Intuition, Grit, Logic, Empathy), equipped Charm and Accessories, Conceptual Scrap balance.
+    * *Party State:* Status of the 12 Archetypes (Alive, Comatose, Recruited), Trust Scores (0–100), unlocked Constellation skill nodes.
+    * *Meta-Progression:* Restored Library wings, Archivist forge levels, Ship Hull Integrity, and Sonar Ring tiers.
+    * *Investigation State:* Shift clock meter, unlocked digital Anchor files, and discovered patient coordinates.
+  * **Performance & Debugging:** <2ms save/load overhead; files can be directly diffed in Git or edited in plain text for testing edge-case quest branches.
 * **Development Automation:** Unity MCP (`unity-mcp` via local relay) for automated editor tooling, test execution, and scene inspection.
 
 **8.2 Target Platforms:**
