@@ -174,140 +174,101 @@
 * **Psychological Hazards:** Environmental traps scale with the patient's specific neuroses. Paranoia manifests as glass floors that shatter loudly to alert enemies. Regret creates spatial loops requiring the player to defeat a specific Stagnant enemy to break the cycle.
 * **Loot Distribution:** Standard chests hold Emotional Salves for basic healing. Rare Accessories sit behind optional elite encounters representing deeply repressed memories.
 
-### **8. TECHNICAL \& SYSTEM REQUIREMENTS**
+### **8. TECHNICAL & SYSTEM REQUIREMENTS**
 
-**8.1 Engine:** Unity Engine (utilizing C#, Cinemachine for dynamic camera systems, and MCP for rapid logic iteration).
+**8.1 Engine & Core Frameworks:**
+* **Engine:** Unity 6 (`6000.6.4f1`) with Universal Render Pipeline (URP).
+* **Cinemachine:** Dynamic 3D combat camera snapping, idle breathing, and fixed apartment inspection framing.
+* **Dialogue & Narrative Engine:** **Ink by Inkle** (`com.inkle.ink-unity-integration`). Manages visual novel text trees, encrypted SMS threads, choice branch states, and binds directly to C# external functions for attribute-modified dice resolution.
+* **Combat System Engine:** **Ability & Combat Toolkit (ACT)**. Powers the turn-based Conditional Time Battle (CTB) logic, status effects, cooldowns, and ability execution.
+* **Development Automation:** Unity MCP (`unity-mcp` via local relay) for automated editor tooling, test execution, and scene inspection.
 
 **8.2 Target Platforms:**
-
 * PC stands as the primary platform, mirroring the in-game desktop OS.
 * Secondary targets include current-generation consoles.
 
 **8.3 Control Scheme:**
-
 * **Mouse:** Click-to-move mechanics for navigation. Right-clicking triggers context menus for interacting with the OS, charting ship courses, and selecting combat actions.
 * **Controller:** Full gamepad support. The left stick handles direct character movement. Face buttons map to right-click context menus for seamless UI interaction.
 
 ### **9. UI/UX ARCHITECTURE**
 
-**9.1 The Waking World (Apartment \& Desktop OS):**
-
+**9.1 The Waking World (Apartment & Desktop OS):**
 * **The Physical Room:** Zero HUD. The screen is completely clean. The environment acts as the interface. Right-clicking an interactive object snaps the camera into a fixed perspective.
-* **The Desktop OS:** Pure function. High-contrast black and white. Amber accents highlight actionable links and the Shift timer. The cursor is a blocky terminal underscore. Context menus drop down with a sharp mechanical clack.
+* **The Desktop OS:** Pure function. High-contrast black and white with amber accents. Powered by **All In 1 Sprite Shader** with built-in scanlines, CRT screen curvature, phosphor glow, and subtle terminal glitching.
 * **The Shift Clock:** A digital readout anchored in the corner of the monitor. It ticks down only when an investigation or conversation resolves. It builds passive psychological pressure.
-* **Encrypted Comms:** Text threads on the cell phone interface mimic old SMS layouts. The scrolling is slightly sluggish. The text is dense.
+* **Encrypted Comms:** Text threads on the cell phone interface mimic old SMS layouts, driven dynamically through Ink narrative branches.
 
-**9.2 The Sea Overworld (Navigation \& Stealth):**
-
+**9.2 The Sea Overworld (Navigation & Stealth):**
 * **The Helm:** The UI frames the edges of the screen lightly.
-* **Sonar Ring:** A faint amber circle projected directly onto the pitch-black water around the ship. Enemy vision cones sweep across this ring. It provides critical stealth data without crowding the screen.
+* **Sonar Ring:** An amber billboard ring projected directly onto the pitch-black water around the ship. Enemy vision cones sweep across this ring. It provides critical stealth data without crowding the screen.
 * **Hull Integrity:** A wireframe schematic of the ship anchored to the bottom right. Damage renders sections jagged and red.
 * **The Lighthouse Tuner:** Analog dials dominate the navigation menu. Players rotate them with the mouse wheel or analog stick to match frequency waves and chart a safe return to the Library.
 
 **9.3 Dreamscape Combat (Conditional Time Battle):**
-
-* **The Timeline:** A thick vertical smear of glowing amber paint on the left margin. Character portraits slide down the paint track as their turn approaches.
-* **Context Menus:** Right-clicking targets in combat projects the action menu directly onto the 3D environment. The words FIGHT, DEFEND and ITEM bleed into the air next to the character like neon graffiti.
+* **The Timeline:** A thick vertical smear of glowing amber paint on the left margin. Character portraits and **POLYGON Icons** slide down the paint track as turns approach.
+* **Action Graffiti (Billboards):** Right-clicking targets in combat projects the action menu directly onto the 3D environment. The words FIGHT, DEFEND and ITEM bleed into the air next to the character as camera-facing unlit amber emissive billboards.
 * **Resource Tracking:** Health points are stark white numbers floating above heads. The Resolve meter sits at the bottom center. It mimics a glass vial filling with liquid amber. Taking or dealing damage causes the fluid to violently slosh.
 * **The Stabilization Prompt:** When an ally falls the UI aggressively shifts. The hyper-saturated colors drain to a muddy gray. A heavy heartbeat visual dominates the center screen. The prompt to sacrifice all Resolve flashes urgently over the downed ally.
 
-**9.4 Menus \& Progression (The Pause Screen):**
-
+**9.4 Menus & Progression (The Pause Screen):**
 * **Waking Access:** Trust scores, character profiles and acquired Anchors are reviewed via the clunky cell phone interface or a physical notebook on the desk.
 * **Dreamscape Access:** Pausing in a dungeon brings up the Mind's Eye screen. It freezes the hyper-saturated environment and applies a heavy monochrome filter. Clean amber data blocks overlay the screen for upgrading skill trees, equipping Charms and managing Accessories.
+* **Constellation Skill Trees (UGUI & LineRenderer):** 12 unique constellation graphs on a pitch-black starry background. Star nodes are styled sprites connected by glowing amber `LineRenderer` paths, avoiding heavy vector plugins.
 
-**9.5 Dice Rolls \& Narrative Resolution (Visual Novel Style):**
-
+**9.5 Dice Rolls & Narrative Resolution (Visual Novel Style):**
 * **The Transition:** Clicking a critical interactive object locks the camera. Black letterboxing frames the top and bottom of the screen. A translucent black text box anchors the lower third.
-* **The Text Interface:** The heavy clack of a mechanical keyboard accompanies the text as it populates the box. The internal monologue of the protagonist and ambient environmental details drive the scene. The screen remains static.
+* **The Text Interface:** The heavy clack of a mechanical keyboard accompanies the text as Ink populates the box. The internal monologue of the protagonist and ambient environmental details drive the scene.
 * **The Prompt:** The text box presents a branching choice. The action requires a stat check. The required attribute highlights in stark amber next to the dialogue option.
-* **The Execution:** The player clicks their choice. A 3D wireframe die materializes directly over the 2D desktop OS interface. It spins rapidly. The audio delivers the sharp rattle of heavy plastic tumbling across a wooden desk.
-* **The Resolution:** The die locks into place. The number flashes amber for success or dull grey for failure. The text box immediately types out the consequence. Success pushes the narrative forward and decrypts the necessary data. Failure triggers a harsh digital buzzer. The text box describes the firewall locking down or the contact going silent. The Shift clock ticks down one segment with a heavy mechanical clunk.
+* **The Execution:** The player clicks their choice. A 3D wireframe die materializes directly over the 2D desktop OS interface. It spins rapidly with the sharp rattle of plastic tumbling across a wooden desk.
+* **The Resolution:** The die locks into place. The number flashes amber for success or dull grey for failure. Ink routes immediately to the consequence branch.
 
 ### **10. THE OPENING SEQUENCE (First 10 Minutes)**
 
 **Phase 1: In Media Res (Minutes 0 to 3)**  
-The game opens directly into combat. Blinding neon colors bleed across the screen. The setting is a fractured stained glass cathedral floating on black water. The player controls their towering avatar and their first ally. This ally is Brick. The tutorial introduces the amber timeline. The player selects an attack. Brick follows up with a heavy physical strike. The enemy retaliates. Brick takes lethal damage. The combat music cuts out completely. A heavy heartbeat thumps through the audio track. The hyper-saturated colors drain to a muddy grey. The stabilization prompt appears. The player sacrifices all Resolve to save Brick. The stabilization succeeds but drains the avatar completely. A blinding white flash consumes the screen.
+The game opens directly into combat. Blinding neon colors bleed across the screen (Quibli anime shaders). The setting is a fractured stained glass cathedral floating on black water. The player controls their towering avatar and their first ally (Brick). The tutorial introduces the amber timeline. The player selects an attack. Brick follows up with a heavy physical strike. The enemy retaliates. Brick takes lethal damage. The combat music cuts out completely. A heavy heartbeat thumps through the audio track. The hyper-saturated colors drain to a muddy grey. The stabilization prompt appears. The player sacrifices all Resolve to save Brick. The stabilization succeeds but drains the avatar completely. A blinding white flash consumes the screen.
 
 **Phase 2: The Snap (Minutes 3 to 5)**  
-Absolute silence. The screen remains black. A single amber terminal cursor blinks in the center. The camera pulls back slowly. The player stares at a curved CRT monitor inside a cramped studio apartment. The visual dissonance hits immediately. The room is stark monochrome. The low drone of a cheap refrigerator fills the room. Sirens wail faintly through the thin walls. The player clicks to stand up. The physical room acts as the menu.
+Absolute silence. The screen remains black. A single amber terminal cursor blinks in the center. The camera pulls back slowly. The player stares at a curved CRT monitor inside a cramped studio apartment. The visual dissonance hits immediately. The room is stark monochrome (POLYGON City + B&W post-process). The low drone of a cheap refrigerator fills the room. Sirens wail faintly through the thin walls. The player clicks to stand up. The physical room acts as the menu.
 
 **Phase 3: The Desk (Minutes 5 to 8)**  
-The player clicks the desktop computer. The camera snaps to a fixed perspective. The visual novel interface locks in. A heavy mechanical clatter sounds as text populates the lower box. An encrypted, heavily guarded message arrives from Brick. The dialogue establishes the game's core paranoia: allies refuse to share real names or details, treating the player with suspicion since anyone could be aligned with the Dreamers. The first dice roll triggers. Brick sends a fragmented digital Anchor file requiring an Intuition check to decrypt. A 3D wireframe die materializes. It drops onto the 2D desktop and clatters loudly. The outcome dictates the next text prompt. The player learns how base stats affect the waking world.
+The player clicks the desktop computer. The camera snaps to a fixed perspective. The visual novel interface locks in. A heavy mechanical clatter sounds as Ink text populates the lower box. An encrypted, heavily guarded message arrives from Brick. The dialogue establishes the game's core paranoia: allies refuse to share real names or details. The first dice roll triggers: Brick sends a fragmented digital Anchor file requiring an Intuition check to decrypt. A 3D wireframe die drops onto the 2D desktop and clatters loudly. The outcome dictates the next text prompt.
 
 **Phase 4: The Metronome (Minutes 8 to 10)**  
-The player backs away from the desk and clicks the television. Static buzzes sharply. A clinical news anchor details the rising global coma count. The broadcast sets the narrative stakes. The digital Shift clock fades into the top corner of the screen. The player possesses limited time. They must secure a digital Anchor or contact a new ally before exhaustion forces them to sleep.
+The player backs away from the desk and clicks the television. Static buzzes sharply. A clinical news anchor details the rising global coma count. The broadcast sets the narrative stakes. The digital Shift clock fades into the top corner of the screen. The player possesses limited time before exhaustion forces them to sleep.
 
-## **11. MASTER ASSET LIST**
+---
 
-### **11.1 3D MODELS \& ENVIRONMENTS**
+## **11. MASTER ASSET IMPLEMENTATION & TOOLKIT MATRIX**
 
-* **The Waking World (Monochrome Noir):**
+### **11.1 3D Environments & World Building**
+* **The Waking World (Monochrome Noir Apartment & City):**
+  * **Source Asset:** Synty **POLYGON - City Pack**.
+  * **Visual Treatment:** Custom URP Post-Processing Volume enforcing a strict 100% grayscale black-and-white color grading profile, accented solely by high-contrast emissive amber (#FFBF00) displays, terminal cursors, and LEDs.
+* **The Collective Unconscious & Ships:**
+  * **Source Asset:** Synty **POLYGON - Pirates Pack**.
+  * **Vessels:** Customizable player vessel, Vulture raider ships, dreadnoughts, and sea wreckage.
+  * **The Pitch-Black Sea:** Mesh-based stylized water plane from POLYGON Pirates configured with an obsidian/pitch-black albedo, deep refraction absorption, and an emissive amber foam/wake fringe that illuminates as vessels cut through the dark liquid thought.
+* **Dreamscape Patient Islands (Biome Generation):**
+  * **Offline Curated Generation:** Built using **Gaia** (island landmasses, cliff stamping, coastlines) and **GeNa** (rule-based placement of modular architectural rooms, filing-cabinet mazes, corridors, and handcrafted Core boss arenas). Generates layout variations in-editor to eliminate runtime stutter, broken seeds, and pathfinding glitches.
+  * **Biome Packs:** Synty **POLYGON - Dungeons**, **Fantasy Medieval**, **Sci-Fi**, **Western / Western Frontier**, and **Farm** packs representing diverse comatose psyche islands.
+  * **Stylized Rendering:** **Quibli Anime Shaders and Tools** (StylizedLit toon/cel shading, vibrant gradient ramps, rim lights, and stylized outlines) applied over low-poly meshes to generate the intense, blinding hyper-saturation of the dreamscapes.
 
-  * **The Apartment:** Cramped studio layout, unmade bed, cheap refrigerator, heavy desk, CRT monitor, television, cellular phone. Textures must be strictly grayscale.
-  * **The Die:** A 3D wireframe die that drops over the 2D UI during narrative checks.
-* **The Collective Unconscious (Overworld \& Hub):**
+### **11.2 Combat, Characters & UI Systems**
+* **Combat Engine:** **Ability & Combat Toolkit (ACT)**. Manages turn-based timeline order, ability triggers, cooldowns, and combat state machines.
+* **Avatars & Enemies:** Custom kitbashed characters from Synty packs + **POLYGON Boss Zombies**, **Alien Arachnoid Drone**, and **Dragons** for psychological nightmare manifestations.
+* **Visual Effects:** Synty **Polygon Particle FX** and **100 Special Skills Effects Pack** for elemental strikes, constellation buffs, and Resolve expenditure.
+* **UI & HUD Badges:** Synty **POLYGON - Icons Pack** for skill trees, item inventories, status ailments, and CTB timeline portrait markers.
+* **In-World Billboards:** Action graffiti ("FIGHT", "DEFEND", "ITEM") projected in 3D world space using camera-facing quad billboards and TextMeshPro with unlit amber emissive materials.
+* **Constellation Skill Trees:** Screen-space UGUI canvas combining archetype star sprites with Unity's built-in `LineRenderer` with additive amber bloom shaders.
+* **Retro Computer / CRT OS:** **All In 1 Sprite Shader** utilizing its native CRT curvature, scanline density, phosphor glow, and chromatic aberration to render the retro apartment terminal without external dependencies.
 
-  * **The Sea:** A pitch-black liquid shader that reacts to ship movement.
-  * **The Ship:** The player's vessel. Needs states for pristine and damaged.
-  * **The Library (Hub):** A massive, decaying architectural structure floating on the water. Needs upgrade states (Ruined -> Restored). Includes interior zones (Forge, Taproom, Flooded Vaults, High Tower).
-  * **The Lighthouse:** A towering structure emitting a fixed amber beam.
-* **The Dreamscape (Hyper-Saturated):**
-
-  * **Procedural Biome Chunks (Modular):**
-
-    * *The Precinct:* Warped rusted filing cabinets, flickering fluorescents, warped desks.
-    * *The Cathedral:* Fractured stained glass, brass pillars, floating pews.
-    * *The Childhood Home:* Flooded hallways, oversized toys, sinking furniture.
-  * **The Shining Ones (Avatars):** The Hero (investigator with physical Charm), Brick (Towering man, massive sword), Cipher (Floating neon geometry), Weaver (Multi-armed artisan, dripping paint), Sovereign (Regal knight, blinding golden armor, scepter), Pathfinder (Sleek rogue adorned in glowing feathers), Vandal (Punk-aesthetic gunslinger), Muse (Siren-like figure, crystalline harp), Harlequin (Masked trickster), Oracle (Blindfolded ascetic, floating), Aegis (Ethereal child, glowing spherical shield), Legion (Faceless, shifting amalgam of people).
-  * **Enemies:** The Stagnant (Brass and stained glass constructs), The Smothering (Silk mannequins), The Swarm (Floating geometric eyes), Vulture Ships (Hostile overworld vessels).
-  * **Bosses:** Leviathans (Massive, multi-part sea creatures), The Cult Leader (Wielding the cloak and hourglass).
-  * **Props \& Pickups:** Conceptual Scrap (jagged amber glass shards), Treasure Chests, Memory Fragments (door keys).
-
-### **11.2 UI \& 2D ASSETS**
-
-* **Waking World OS (Grayscale + Amber):**
-
-  * **Desktop Interface:** Retro OS layout, blocky terminal cursor, CRT scanline overlay, stark amber hyperlinks.
-  * **Visual Novel Overlay:** Translucent black text box, amber highlighted stat requirements.
-  * **The Shift Clock:** Heavy digital LCD readout.
-  * **Encrypted Comms:** Chunky, sluggish SMS text threads on the cell phone interface.
-* **Overworld HUD:**
-
-  * **Sonar Ring:** A faint amber circle projected directly onto the black water.
-  * **Hull Schematic:** Wireframe ship graphic that turns jagged and red when damaged.
-  * **Lighthouse Tuner:** Analog dials and frequency wave visualizer.
-* **Dreamscape Combat (CTB):**
-
-  * **The Timeline:** A thick vertical smear of glowing amber paint, 2D character portraits.
-  * **Action Graffiti:** Neon text (FIGHT, DEFEND, ITEM, SKILL) projected in 3D space next to characters.
-  * **Resource Trackers:** Stark white floating damage numbers, liquid amber glass vial (Resolve Meter), floating HP bars.
-  * **Stabilization Overlay:** Muddy gray screen filter, pulsating heartbeat vignette, urgent "Sacrifice Resolve" prompt.
-* **Menus:**
-
-  * **Mind's Eye (Pause Menu):** Monochrome filter over the 3D world, clean amber data blocks.
-  * **Constellation Skill Trees:** 12 unique constellation shapes on a pitch-black starry background, glowing nodes (unlocked) and dark nodes (locked), visual "chains" for the ultimate ability.
-
-### **11.3 AUDIO DESIGN (SFX \& MUSIC)**
-
-* **Waking World Audio:**
-
-  * **Ambience:** Low refrigerator drone, muffled rain, distant sirens, frantic scratching/muffled screaming from insomniacs outside the walls.
-  * **Foley \& UI:** Heavy mechanical keyboard clacks, sharp rattle of a plastic die on a wooden desk, harsh digital buzzer, heavy mechanical clunk (Shift clock).
-* **Dreamscape Audio:**
-
-  * **Combat:** Visceral impact sounds, shattering glass (when scrap drops), Leviathan roars.
-  * **System:** Heavy heartbeat thumping and low electric hum (when an ally falls), heavy metal coins dropping into a tin cup.
-  * **UI:** Sharp mechanical clacks for menu navigation to contrast the fluid dream world.
-* **The Library Ambience:**
-
-  * **The Forge:** Melting metal, anvil strikes.
-  * **The Taproom:** Clinking heavy glass, crackling woodsmoke.
-  * **The Vaults:** Cold sloshing seawater.
-  * **The Tower:** Howling wind through broken glass.
-  * **The Hearth:** Low, rhythmic breathing of a large hound.
-
-12\. Purchased Unity Assets
-
-Lets use Polygon City for the waking world with a black and white post processing profile over it. I can use various synty POLYGON assets for the different islands along with the quibli anime shaders. For combat and ui, we can use POLYGON Icons, the ability and combat toolkit, and polygon particle FX pack.
+### **11.3 Audio Design & Music Pipeline**
+* **Ambient Soundscapes:** **Ambient Sounds - Interactive Soundscapes for Unity 6** driving real-world apartment rain, wind, city hum, and room tone.
+* **Music & Atmospheric Motifs:** **Google Lyria (DeepMind Audio)**:
+  * *Waking World:* Minimalist noir jazz, low cello drones, and tape hum reflecting isolation and paranoia.
+  * *Dreamscape:* High-tempo, surreal, psychedelic synth-progression tracks contrasting the stark waking silence.
+* **Tactile Diegetic Foley (Open-Source SFX Archives):**
+  * *Waking Interactions:* Heavy mechanical keyboard clacking (Cherry MX Blue/Buckling Spring foley), plastic polyhedral dice rattling on wood, sharp CRT power hum, and mechanical Shift clock chunk.
+  * *Combat Impact:* Glass shattering (Conceptual Scrap collection), heavy heartbeat thump and low electrical drone during stabilization crisis, and metallic coin clatter into a tin cup.
 
