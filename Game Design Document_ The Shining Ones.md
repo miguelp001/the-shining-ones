@@ -181,6 +181,10 @@
 * **Cinemachine:** Dynamic 3D combat camera snapping, idle breathing, and fixed apartment inspection framing.
 * **Dialogue & Narrative Engine:** **Ink by Inkle** (`com.inkle.ink-unity-integration`). Manages visual novel text trees, encrypted SMS threads, choice branch states, and binds directly to C# external functions for attribute-modified dice resolution.
 * **Story Compilation & Linting CLI:** **Inklecate CLI** (`v1.2.1`). Enables automated out-of-engine validation, syntax linting, and rapid batch compilation of `.ink` scripts into `.json` without triggering Unity domain reloads.
+* **Narrative Typography & FX Engine:** **Text Animator for Unity (Febucci)**. Integrates directly with TextMeshPro and Ink for mechanical typewriter pacing, erratic panic shakes, corrupted data glitches, and per-letter foley triggers.
+* **Motion & Tweening Engine:** **DOTween (Free)** (`com.madstrawberry.dotween`). Chained elastic tweens for CTB timeline portrait sliding, Resolve vial fluid slosh, UI punch scales, and camera letterbox transitions.
+* **Skill Tree Visual Graph Editor:** **xNode** (`com.github.siccity.xnode`). Custom in-editor visual node canvas for authoring, balancing, and exporting the 12 Constellation Skill Trees.
+* **Perception & Stealth Sensing:** **Sensor Toolkit 2**. Powers 3D line-of-sight cone sensors for patrol vessels and radial range sensing for the player's Sonar Ring.
 * **Combat System Engine:** **Ability & Combat Toolkit (ACT)**. Powers the turn-based Conditional Time Battle (CTB) logic, status effects, cooldowns, and ability execution.
 * **Save & Persistence Architecture (Atomic JSON):**
   * **Format:** Strongly-typed, human-readable **JSON** (via Unity `JsonUtility` / `Newtonsoft.Json`). Avoids bloated black-box relational databases (SQLite) and platform-specific native binaries.
@@ -212,7 +216,8 @@
 
 **9.2 The Sea Overworld (Navigation & Stealth):**
 * **The Helm:** The UI frames the edges of the screen lightly.
-* **Sonar Ring:** An amber billboard ring projected directly onto the pitch-black water around the ship. Enemy vision cones sweep across this ring. It provides critical stealth data without crowding the screen.
+* **Sonar Ring & Perception:** An amber billboard ring projected directly onto the pitch-black water around the ship, powered by radial range sensors to reveal submerged terrain and enemy sound profiles.
+* **Vision Cones (Procedural FOV Mesh Fan):** Enemy patrol vessels and Leviathans project true dynamic vision cones using raycast-based procedural polygon mesh fans that physically hug the dark water surface and dynamically cut/clip around islands and sea rocks. Materials glow dull amber during idle sweeps and flare into jagged crimson when the player's vessel penetrates the beam.
 * **Hull Integrity:** A wireframe schematic of the ship anchored to the bottom right. Damage renders sections jagged and red.
 * **The Lighthouse Tuner:** Analog dials dominate the navigation menu. Players rotate them with the mouse wheel or analog stick to match frequency waves and chart a safe return to the Library.
 
@@ -225,7 +230,7 @@
 **9.4 Menus & Progression (The Pause Screen):**
 * **Waking Access:** Trust scores, character profiles and acquired Anchors are reviewed via the clunky cell phone interface or a physical notebook on the desk.
 * **Dreamscape Access:** Pausing in a dungeon brings up the Mind's Eye screen. It freezes the hyper-saturated environment and applies a heavy monochrome filter. Clean amber data blocks overlay the screen for upgrading skill trees, equipping Charms and managing Accessories.
-* **Constellation Skill Trees (UGUI & LineRenderer):** 12 unique constellation graphs on a pitch-black starry background. Star nodes are styled sprites connected by glowing amber `LineRenderer` paths, avoiding heavy vector plugins.
+* **Constellation Skill Trees (xNode + UGUI & LineRenderer):** Visually authored and balanced via **xNode** editor graphs. In-game, rendered as 12 unique constellation graphs on a pitch-black starry background, where star nodes are styled sprites connected by glowing amber DOTween-animated `LineRenderer` paths, avoiding heavy vector plugins.
 
 **9.5 Dice Rolls & Narrative Resolution (Visual Novel Style):**
 * **The Transition:** Clicking a critical interactive object locks the camera. Black letterboxing frames the top and bottom of the screen. A translucent black text box anchors the lower third.
@@ -277,8 +282,10 @@ The player backs away from the desk and clicks the television. Static buzzes sha
 * **Visual Effects:** Synty **Polygon Particle FX** and **100 Special Skills Effects Pack** for elemental strikes, constellation buffs, and Resolve expenditure.
 * **UI & HUD Badges:** Synty **POLYGON - Icons Pack** for skill trees, item inventories, status ailments, and CTB timeline portrait markers.
 * **In-World Billboards:** Action graffiti ("FIGHT", "DEFEND", "ITEM") projected in 3D world space using camera-facing quad billboards and TextMeshPro with unlit amber emissive materials.
-* **Constellation Skill Trees:** Screen-space UGUI canvas combining archetype star sprites with Unity's built-in `LineRenderer` with additive amber bloom shaders.
+* **Constellation Skill Trees:** Visually constructed using **xNode** editor graphs, rendered in-game on a screen-space UGUI canvas combining archetype star sprites with Unity's built-in `LineRenderer` with additive amber bloom shaders and DOTween node pulse animations.
+* **Dialogue Typography & FX:** **Text Animator for Unity (Febucci)** paired with TextMeshPro and Ink, driving typewriter reveals, psychological panic shakes, glitch tags, and character-by-character foley sound triggers.
 * **Retro Computer / CRT OS:** **All In 1 Sprite Shader** utilizing its native CRT curvature, scanline density, phosphor glow, and chromatic aberration to render the retro apartment terminal without external dependencies.
+* **UI & Timeline Motion:** **DOTween** powering fluid CTB portrait transitions, Resolve vial slosh animations, and UI punch scaling.
 
 ### **11.3 Audio Design & Music Pipeline**
 * **Ambient Soundscapes:** **Ambient Sounds - Interactive Soundscapes for Unity 6** driving real-world apartment rain, wind, city hum, and room tone.
