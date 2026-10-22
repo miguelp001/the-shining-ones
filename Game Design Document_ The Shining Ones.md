@@ -256,7 +256,13 @@ The player backs away from the desk and clicks the television. Static buzzes sha
 
 ### **11.2 Combat, Characters & UI Systems**
 * **Combat Engine:** **Ability & Combat Toolkit (ACT)**. Manages turn-based timeline order, ability triggers, cooldowns, and combat state machines.
-* **Avatars & Enemies:** Custom kitbashed characters from Synty packs + **POLYGON Boss Zombies**, **Alien Arachnoid Drone**, and **Dragons** for psychological nightmare manifestations.
+* **Character Creation & Dual-Form Pipeline (The 12 Archetypes):**
+  * **Core Tool:** **Synty POLYGON - Sidekicks Character Creator** (Unity 6 URP compatible).
+  * **Waking World Humans:** Crafted with everyday civilian attire (suits, office wear, hoodies, casual clothing) reflecting mundane vulnerability and psychological isolation, rendered through the grayscale noir post-processing profile.
+  * **Dreamscape Avatars:** Built modularly using Sidekicks armor, fantasy gear, cloaks, and weapons to represent the 12 idealized Jungian archetypes (e.g. Brick's massive armored tank, Sovereign's regal golden commander, Vandal's punk gunslinger). Rendered with **Quibli Anime Shaders** (`StylizedLit`) for vibrant, cel-shaded saturation.
+  * **Animation Rigging:** Universal Unity Humanoid (Mecanim) bone structure ensures seamless animation sharing across both mundane and dream forms using the **FREE - 32 RPG Animations** and combat motion clips.
+  * **2D Portrait Generation:** Posed 3D Sidekicks models are captured in-editor with transparent backgrounds to supply 1:1 matching 2D character portraits for **Ink visual novel dialogue boxes**, encrypted SMS chat threads, and the **vertical amber CTB combat timeline**.
+* **Nightmares & Enemies:** Custom kitbashed psychological foes from Synty packs + **POLYGON Boss Zombies**, **Alien Arachnoid Drone**, and **Dragons** for nightmare boss and elite manifestations.
 * **Visual Effects:** Synty **Polygon Particle FX** and **100 Special Skills Effects Pack** for elemental strikes, constellation buffs, and Resolve expenditure.
 * **UI & HUD Badges:** Synty **POLYGON - Icons Pack** for skill trees, item inventories, status ailments, and CTB timeline portrait markers.
 * **In-World Billboards:** Action graffiti ("FIGHT", "DEFEND", "ITEM") projected in 3D world space using camera-facing quad billboards and TextMeshPro with unlit amber emissive materials.
