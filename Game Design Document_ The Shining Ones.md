@@ -67,13 +67,13 @@
 **3.2 Waking World Mechanics (The Apartment Simulation):**
 
 * **The Shift System:** Time dictates progress. Deep investigations or lengthy communications eat up discrete chunks of the day.
-* **Narrative Interface:** Clicking physical objects in the room transitions the gameplay into text-driven narrative menus. The investigation unfolds through descriptive prose and choice-driven dialogue trees.
-* **Dice-Driven Resolution:** Outcomes for critical waking world actions rely on dice rolls modified by the player's core stats. A failed dice roll consumes a Shift without yielding progress.
+* **Narrative Interface (Ink & Text Animator):** Clicking physical objects in the room transitions the gameplay into text-driven narrative menus powered by **Ink by Inkle**. Text is rendered with **Text Animator for Unity (Febucci)** featuring mechanical typewriter pacing, corrupted glitching, and per-letter mechanical keyboard foley. The investigation unfolds through descriptive prose and branching dialogue trees.
+* **Dice-Driven Resolution:** Outcomes for critical waking world actions rely on 3D wireframe dice rolls modified by the player's core stats (Intuition, Grit, Logic, Empathy). A failed dice roll consumes a Shift without yielding progress.
 * **Digital Anchors:** Anchors are deep connections to the sleeper. These manifest as voicemails, redacted police reports, magazine covers or strange code. The core puzzle involves using the desktop OS to uncover a deep secret. This secret becomes the navigational marker required to locate the patient's island in the dreamscape.
 
-**3.3 The Ship \& Navigation (The Sea Overworld):**
+**3.3 The Ship & Navigation (The Sea Overworld):**
 
-* **Piloting \& Stealth:** Manage hull integrity. The pitch-black sea functions as an overworld where players avoid Leviathan and Vulture vision cones.
+* **Piloting & Stealth (Sensor Toolkit 2 & Procedural FOV Cones):** Manage hull integrity. The pitch-black sea functions as an overworld where players navigate stealthily using an amber Sonar Ring while evading dynamic enemy vision cones. Vision cones are rendered as procedural polygon mesh fans that physically hug the dark water surface and dynamically clip around island landmasses. If the ship penetrates a cone, enemy patrols (using Sensor Toolkit 2 context steering) turn to pursue and engage.
 * **Deck Combat (Grinding):** When Vultures attack, the perspective swaps to standard JRPG combat on the ship's deck. This provides a repeatable loop to grind for parts, experience, and conceptual scrap.
 
 **3.4 Dreamscape Combat System (Conditional Time Battle - CTB):**
@@ -129,7 +129,8 @@
 
 ### **6.4 The Constellation Skill Trees**
 
-* **Visual Interface:** Accessing an ally's skill tree via the pause menu freezes the dreamscape. The background shifts to a pitch-black night sky. The skill tree projects as a sprawling constellation representing the character's specific Jungian archetype (e.g., a shield for The Caregiver, a crown for The Ruler). Each constellation uniquely personifies that specific Shining One's psychological role within the dream world.
+* **Authoring Pipeline (xNode):** The 12 constellation trees are authored visually in the Unity Editor using **xNode** graph canvases. Designers connect star nodes, set attribute modifiers, and assign active/passive abilities, which compile cleanly into the atomic JSON progression system.
+* **In-Game Visual Interface:** Accessing an ally's skill tree via the pause menu freezes the dreamscape. The background shifts to a pitch-black night sky. The skill tree projects as a sprawling constellation representing the character's specific Jungian archetype (e.g., a shield for The Caregiver, a crown for The Ruler). Rendered on a screen-space UGUI canvas combining star sprites with glowing amber `LineRenderer` paths and DOTween pulse animations.
 * **Skill Points (SP):** Surviving battles and clearing Patient Islands grants experience points. Leveling up awards SP. The player manually allocates SP to connect stars and dictate the ally's combat loadout. This entirely replaces traditional gear management.
 * **Node Architecture:**
 
@@ -167,10 +168,17 @@
 * **The Library:** A fixed sanctuary hub.
 * **Patient Islands:** Procedurally generated roguelike JRPG dungeons reflecting specific traumas featuring stealth, exploration, and combat.
 
-### **7.3 Patient Island Generation:**
+### **7.3 Patient Island Generation (In-Editor Curated Pipeline):**
 
+* **Generation Workflow (Gaia & GeNa):** Rather than unpredictable runtime procedural generation that risks navigation bugs, broken seeds, and framerate hitching, Patient Islands utilize an **offline curated procedural workflow**:
+  * **Gaia:** Stamps out the island's macro landmasses, sea cliffs, and coastal shelves directly in the Unity Editor.
+  * **GeNa & Custom Spawners:** Automatically assembles modular Synty room chunks, filing-cabinet corridors, and hazard zones along procedural splines.
+  * **Curated Handcrafting:** Designers hand-tune enemy patrol routes, memory fragment lock placements, and the dramatic architecture of the *Core* boss arena. The level is baked and loaded seamlessly at runtime with zero hitching.
 * **The Biome Foundation:** The digital Anchor dictates the environment. The secret uncovered on the OS computer forms the foundation of the island. A redacted police report spawns a warped precinct maze of rusted filing cabinets and flickering fluorescents.
-* **Structural Anatomy:** Islands follow a three-act procedural layout. **The Periphery** consists of outer stealth zones where players navigate blind spots to avoid patrols. **The Suppression Wards** act as deeper heavy combat arenas where doors require specific memory fragments to unlock. **The Core** is a handcrafted epicenter housing the nightmare boss.
+* **Structural Anatomy:** Islands follow a three-act layout:
+  * **The Periphery:** Outer stealth zones where players navigate blind spots to avoid Vulture and nightmare patrols.
+  * **The Suppression Wards:** Deeper heavy combat arenas where progression doors require specific memory fragments to unlock.
+  * **The Core:** A handcrafted, dramatic epicenter housing the comatose patient's trauma boss.
 * **Psychological Hazards:** Environmental traps scale with the patient's specific neuroses. Paranoia manifests as glass floors that shatter loudly to alert enemies. Regret creates spatial loops requiring the player to defeat a specific Stagnant enemy to break the cycle.
 * **Loot Distribution:** Standard chests hold Emotional Salves for basic healing. Rare Accessories sit behind optional elite encounters representing deeply repressed memories.
 
@@ -265,6 +273,7 @@ The player backs away from the desk and clicks the television. Static buzzes sha
   * **Source Asset:** Synty **POLYGON - Pirates Pack**.
   * **Vessels:** Customizable player vessel, Vulture raider ships, dreadnoughts, and sea wreckage.
   * **The Pitch-Black Sea:** Mesh-based stylized water plane from POLYGON Pirates configured with an obsidian/pitch-black albedo, deep refraction absorption, and an emissive amber foam/wake fringe that illuminates as vessels cut through the dark liquid thought.
+  * **Overworld Perception & Stealth:** **Sensor Toolkit 2** powers line-of-sight cone sensing and radial Sonar Ring tracking. Enemy vision cones are rendered via a **Procedural FOV Mesh Fan** (Option B) that dynamically hugs the water surface and wraps/clips around island terrain, shifting from pale amber (idle patrol) to jagged crimson (detection).
 * **Dreamscape Patient Islands (Biome Generation):**
   * **Offline Curated Generation:** Built using **Gaia** (island landmasses, cliff stamping, coastlines) and **GeNa** (rule-based placement of modular architectural rooms, filing-cabinet mazes, corridors, and handcrafted Core boss arenas). Generates layout variations in-editor to eliminate runtime stutter, broken seeds, and pathfinding glitches.
   * **Biome Packs:** Synty **POLYGON - Dungeons**, **Fantasy Medieval**, **Sci-Fi**, **Western / Western Frontier**, and **Farm** packs representing diverse comatose psyche islands.
